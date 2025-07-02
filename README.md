@@ -16,6 +16,10 @@
 ### Optional
 - `--formatOutput` outputs as json or yaml. yaml is the default
 - `--namespace` select single namespace. The default is all
+### ToDo
+- `--getCron` list cron data
+### Features ToDo
+- ECR parsing and verification
 
 ## Useful 1-liners:
 `k8shc --getUnhealthyPods --outputFormat=json | jq '.[] | select(.containerReason == "ImagePullBackOff")'`
