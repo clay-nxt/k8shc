@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
 
 	"github.com/nexthink/k8shc/cmd/flux"
 	"github.com/nexthink/k8shc/cmd/kubeclient"
@@ -10,7 +11,12 @@ import (
 	"github.com/nexthink/k8shc/cmd/workloads"
 )
 
+var (
+	version = "dev"
+)
+
 func main() {
+	verFlag := flag.Bool("version", false, "Show version")
 	namespace := flag.String("namespace", "", "Target namespace (default: all namespaces)")
 	includeDeployments := flag.Bool("getDeployments", false, "Check Deployments (default: false)")
 	includeStatefulSets := flag.Bool("getStatefulSets", false, "Check StatefulSets (default: false)")
@@ -21,6 +27,10 @@ func main() {
 
 	flag.Parse()
 
+	if *verFlag {
+		fmt.Println("k8shc version", version)
+		os.Exit(0)
+	}
 	config := kubeclient.GetRestConfig()
 	client := kubeclient.Connect()
 
