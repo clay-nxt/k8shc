@@ -13,11 +13,12 @@
 - `--getDaemonSets` gets all daemon sets
 - `--getUnhealthyPods` gets all unhealthy pods
 - `--getFlux` gets flux configuration and status
+- `--getCronJobs` list cron data
 ### Optional
 - `--formatOutput` outputs as json or yaml. yaml is the default
 - `--namespace` select single namespace. The default is all
 ### ToDo
-- `--getCron` list cron data
+
 ### Features ToDo
 - ECR parsing and verification
 

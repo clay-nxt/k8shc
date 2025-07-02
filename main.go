@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/nexthink/k8shc/cmd/cron"
 	"github.com/nexthink/k8shc/cmd/flux"
 	"github.com/nexthink/k8shc/cmd/kubeclient"
 	"github.com/nexthink/k8shc/cmd/pods"
@@ -23,6 +24,7 @@ func main() {
 	includeDaemonSets := flag.Bool("getDaemonSets", false, "Check DaemonSets (default: false)")
 	checkUnhealthySTRUCT := flag.Bool("getUnhealthyPods", false, "Check for unhealthy pods and output json (default: false)")
 	fluxCheckAndList := flag.Bool("getFlux", false, "Check Flux resources (default: false)")
+	getCronJobs := flag.Bool("getCronJobs", false, "Check CronJobs (default: false)")
 	outputFormat := flag.String("outputFormat", "yaml", "Outpout format: json or yaml(default)")
 
 	flag.Parse()
@@ -45,8 +47,11 @@ func main() {
 	if *checkUnhealthySTRUCT {
 		pods.ListUnhealthySTRUCT(client, *namespace, *outputFormat)
 	}
+	if *getCronJobs {
+		cron.ListCronJobs(client, *namespace, *outputFormat)
+	}
 
-	if !*includeDeployments && !*includeStatefulSets && !*includeDaemonSets && !*checkUnhealthySTRUCT && !*fluxCheckAndList {
+	if !*getCronJobs && !*includeDeployments && !*includeStatefulSets && !*includeDaemonSets && !*checkUnhealthySTRUCT && !*fluxCheckAndList {
 		fmt.Println("No output selected. Use --getDeployments, --getStatefulSets, --getDaemonSets, --getUnhealthyPods, or --getFlux.")
 		fmt.Println("Optional: --formatOutput=json|yaml - yaml is default")
 		fmt.Println("Optional: --namespace=<namespace> - all namespaces is default")
